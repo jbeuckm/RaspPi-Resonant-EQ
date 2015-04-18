@@ -25,7 +25,14 @@ instr 1
       initc7    1, 1, 1
       initc7    1, 1, 1
 
-a1     diskin2 "apache.wav", 1, 0, 1, 0, 32
+      
+awhite unirand 2.0
+awhite = awhite - 1.0  
+apink  pinkish awhite, 1, 0, 0, 1
+;a1  = apink * 30000
+a1 = awhite * 30000
+
+;a1     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 klevel0    ctrl7 1, 2, 0, 3
 klevel1    ctrl7 1, 16, 0, 3
@@ -36,7 +43,7 @@ klevel5    ctrl7 1, 80, 0, 3
 klevel6    ctrl7 1, 81, 0, 3
 klevel7    ctrl7 1, 91, 0, 3
 
-kmod	   ctrl7 1, 1, 0, 5
+kmod	   ctrl7 1, 1, .05, 5
 
 af0    pareq a1, 29, klevel0, kmod
        printks "gain(29hz) = %f, q(29hz) = %f\\n", 1, klevel0, kmod
