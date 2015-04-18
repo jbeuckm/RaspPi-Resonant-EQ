@@ -28,23 +28,18 @@ instr 1
 a1     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 klevel0    ctrl7 1, 2, 0, 3
-	   printk2 klevel0
 klevel1    ctrl7 1, 16, 0, 3
-           printk2 klevel1
 klevel2    ctrl7 1, 19, 0, 3
-           printk2 klevel2
 klevel3    ctrl7 1, 71, 0, 3
-           printk2 klevel3
 klevel4    ctrl7 1, 74, 0, 3
-           printk2 klevel4
 klevel5    ctrl7 1, 80, 0, 3
-           printk2 klevel5
 klevel6    ctrl7 1, 81, 0, 3
-           printk2 klevel6
 klevel7    ctrl7 1, 91, 0, 3
-           printk2 klevel7
 
-af0    pareq a1, 29, klevel0, 1
+kmod	   ctrl7 1, 1, 0, 5
+
+af0    pareq a1, 29, klevel0, kmod
+       printks "gain(29hz) = %f, q(29hz) = %f\\n", 1, klevel0, kmod
 af1    pareq af0, 61, klevel1, 1
 af2    pareq af1, 115, klevel2, 1
 af3    pareq af2, 218, klevel3, 1
@@ -55,13 +50,12 @@ af7    pareq af6, 2800, klevel7, 1
 af8    pareq af7, 5200, 1, 1
 af9    pareq af8, 11000, 1, 1
        outs af9, af9
-
 endin
 
 </CsInstruments>
 <CsScore>
 
-i 1 0 100
+i 1 0 3600
 
 e
 
