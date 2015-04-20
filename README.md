@@ -11,11 +11,13 @@ A MIDI controllable DSP version of the [Serge Resonant Equalizer](http://www.cgs
 
 Create a startup script...
 
-- pico autostart.sh
+- `pico autostart.sh`
 - add these lines to your autostart.sh file:
--- csound res_eq.csd
--- pd -noaudio -alsamidi patcher.pd
-- sudo chmod +x autostart.sh 
+```
+csound res_eq.csd
+pd -noaudio -alsamidi patcher.pd
+```
+- `sudo chmod +x autostart.sh`
 - sudo crontab -e
 
 
