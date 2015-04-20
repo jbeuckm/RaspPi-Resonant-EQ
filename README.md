@@ -5,9 +5,11 @@ A MIDI controllable DSP version of the [Serge Resonant Equalizer](http://www.cgs
 
 - (start with a clean install of Raspbian)
 
-`sudo apt-get update`
-`sudo apt-get install csound`
-`sudo apt-get install puredata`
+```
+sudo apt-get update
+sudo apt-get install csound
+sudo apt-get install puredata
+```
 
 Create a startup script...
 
@@ -17,10 +19,11 @@ Create a startup script...
 csound res_eq.csd
 pd -nogui -alsamidi -mididev 1 -noaudio
 ```
-`sudo chmod +x autostart.sh`
-`sudo crontab -e`
-`sudo reboot`
-
+```
+sudo chmod +x autostart.sh
+sudo crontab -e
+sudo reboot
+```
 
 
 
