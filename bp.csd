@@ -48,7 +48,7 @@ klevel9 = 0
 kmod	   ctrl7 1, 1, .05, 1
 
 af0    butterbp ain, 29, 30
-       printks "gain(29hz) = %f, q(29hz) = %f\\n", 1, klevel0, kmod
+       printks "gain(29hz) = %f\\n", 1, klevel0
 af1    butterbp ain, 61, 60
 af2    butterbp ain, 115, 100
 af3    butterbp ain, 218, 100
