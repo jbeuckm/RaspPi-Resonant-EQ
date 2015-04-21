@@ -31,9 +31,9 @@ instr 1
 ;apink  pinkish awhite, 1, 0, 0, 1
 ;a1  = apink * 30000
 ;ain = awhite * 10000
-ain  rand 1
+ain  rand .8
 
-;a1     diskin2 "apache.wav", 1, 0, 1, 0, 32
+;ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 klevel0 = 0
 kres0 = 0
@@ -47,14 +47,17 @@ klevel6    ctrl7 1, 81, 0, 1
 
 klevel7    ctrl7 1, 91, 0, 1
 kres7	   ctrl7 1, 91, 1, 50, 1
+kq7	   ctrl7 1, 91, 2, 10, 1
+
 klevel8	   ctrl7 1, 2, 0, 1
 kres8      ctrl7 1, 2, 1, 50, 1
+kq8	   ctrl7 1, 2, 2, 10, 1
 
 klevel9	   ctrl7 1, 16, 0, 1
 
 kmod	   ctrl7 1, 1, .05, 1
 
-af0    rbjeq ain, 29, 1, 10, kres0
+af0    rbjeq ain, 29, 1, 5, kres0
 af1    butterbp ain, 61, 60
 af2    butterbp ain, 115, 100
 af3    butterbp ain, 218, 100
@@ -62,9 +65,9 @@ af4    butterbp ain, 411, 200
 af5    butterbp ain, 777, 300
 af6    butterbp ain, 1500, 700
 
-af7    rbjeq ain, 2800, 1, 10, kres7
+af7    rbjeq ain, 2800, 1, kq7, kres7
        printks "gain(2800hz) = %f res(2800hz) = %f\\n", 1, klevel7, kres7
-af8    rbjeq ain, 5200, 1, 10, kres8
+af8    rbjeq ain, 5200, 1, kq8, kres8
        printks "gain(2800hz) = %f res(2800hz) = %f\\n", 1, klevel7, kres7
 
 af9    butterbp ain, 11000, 5000
