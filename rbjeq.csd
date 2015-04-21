@@ -26,15 +26,17 @@ instr 1
       initc7    1, 1, .5
 
       
-awhite unirand 2.0
-awhite = awhite - 1.0  
-apink  pinkish awhite, 1, 0, 0, 1
+;awhite unirand 2.0
+;awhite = awhite - 1.0  
+;apink  pinkish awhite, 1, 0, 0, 1
 ;a1  = apink * 30000
-ain = awhite * 10000
+;ain = awhite * 10000
+ain  rand 1
 
 ;a1     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 klevel0    ctrl7 1, 2, 0, 1
+kres0	   ctrl7 1, 2, 1, 50, 1
 klevel1    ctrl7 1, 16, 0, 1
 klevel2    ctrl7 1, 19, 0, 1
 klevel3    ctrl7 1, 71, 0, 1
@@ -42,20 +44,23 @@ klevel4    ctrl7 1, 74, 0, 1
 klevel5    ctrl7 1, 80, 0, 1
 klevel6    ctrl7 1, 81, 0, 1
 klevel7    ctrl7 1, 91, 0, 1
+kres7	   ctrl7 1, 91, 1, 50, 1
+
 klevel8 = 0
 klevel9 = 0
 
 kmod	   ctrl7 1, 1, .05, 1
 
-af0    butterbp ain, 29, 30
-       printks "gain(29hz) = %f\\n", 1, klevel0
+af0    rbjeq ain, 29, 1, 5, kres0
+       printks "gain(29hz) = %f res(29hz) = %f\\n", 1, klevel0, kres0
 af1    butterbp ain, 61, 60
 af2    butterbp ain, 115, 100
 af3    butterbp ain, 218, 100
 af4    butterbp ain, 411, 200
 af5    butterbp ain, 777, 300
 af6    butterbp ain, 1500, 700
-af7    butterbp ain, 2800, 1000
+af7    rbjeq ain, 2800, 1, 5, kres7
+       printks "gain(2800hz) = %f res(2800hz) = %f\\n", 1, klevel7, kres7
 af8    butterbp ain, 5200, 2000
 af9    butterbp ain, 11000, 5000
 
@@ -68,6 +73,8 @@ endin
 
 </CsInstruments>
 <CsScore>
+
+f 1 0 129 5 0.00001 96 0.00001 32 1
 
 i 1 0 3600
 
