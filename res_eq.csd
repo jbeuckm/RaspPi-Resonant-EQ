@@ -31,9 +31,9 @@ instr 1
 ;apink  pinkish awhite, 1, 0, 0, 1
 ;a1  = apink * 30000
 ;ain = awhite * 10000
-ain  rand .8
+;ain  rand .8
 
-;ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
+ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 klevel0 = 0
 kres0 = 0
