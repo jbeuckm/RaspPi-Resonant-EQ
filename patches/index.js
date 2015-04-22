@@ -30,19 +30,36 @@ input.ignoreTypes(false, false, false);
 
 //input.closePort();
 
-var stream = fs.createReadStream("programs.csv");
+var stream = fs.createReadStream("data/programs.csv");
 
-var programs = {};
+var programs = [];
 var currentProgramNumber = 0;
+var currentBankNumber = 0;
 
 csv
     .fromStream(stream, {
         headers: true
     })
     .on("data", function(program){
-	programs[program.number] = program;
+	programs.push(program);
     })
     .on("end", function () {
 	console.log("loaded programs");
 	console.log(programs);
+
+	programs.push({ 'name': 'new' });
+
+	savePrograms();
     });
+
+
+function savePrograms() {
+
+    csv
+	.writeToPath("data/bank"+currentBankNumber+".csv", 
+		     programs, {headers: true})
+	.on("finish", function(){
+	    console.log("done!");
+	});
+}
+
