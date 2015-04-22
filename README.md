@@ -15,26 +15,34 @@ sudo dpkg -i node_latest_armhf.deb
 sudo apt-get install libasound2-dev
 ```
 
-Clone this repo
-`git clone https://github.com/jbeuckm/RaspPi-Resonant-EQ.git res_eq`
+Clone this project:
+```
+git clone https://github.com/jbeuckm/RaspPi-Resonant-EQ.git res_eq
+```
+
+Install the nodejs dependencies:
+```
+cd res_eq/patches
+npm install .
+```
 
 Create a startup script...
 `pico autostart.sh`
 
-Add these lines to your autostart.sh file:
+Add these lines to your autostart.sh script:
 ```
 #!/bin/bash
 node /home/pi/res_eq/patches/index.js &
 csound /home/pi/res_eq/res_eq.csd
 ```
 
-Save the file, and ake your script executable.
+Save the file, and make your script executable.
 `sudo chmod +x autostart.sh`
 
 Edit your cron tasks:
 `sudo crontab -e`
 
-And tell cron to run your script on startup:
+Tell cron to run your script on startup:
 `@reboot /bin/bash /home/pi/autostart.sh`
 
 Restart and verify that the program starts...

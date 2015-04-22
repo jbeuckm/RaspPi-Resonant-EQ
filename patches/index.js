@@ -1,35 +1,30 @@
 var midi = require('midi');
+var Parser = require('midi-parser');
+var msg = Parser.msg;
 
-// Set up a new input.
 var input = new midi.input();
+var parser = new Parser();
 
-// Count the available input ports.
+console.log("Available MIDI ins:");
 var portCount = input.getPortCount();
-
 for (var i=0; i<portCount; i++) {
-    console.log(input.getPortName(i));
+    console.log(i+": "+input.getPortName(i));
 }
 
 
-// Configure a callback.
 input.on('message', function(deltaTime, message) {
-    console.log('m:' + message + ' d:' + deltaTime);
+    parser.write(message);
 });
 
-// Open the first available input port.
+parser.on('midi', console.log);
+
 input.openPort(1);
 
-// Sysex, timing, and active sensing messages are ignored
-// by default. To enable these message types, pass false for
-// the appropriate type in the function below.
-// Order: (Sysex, Timing, Active Sensing)
-// For example if you want to receive only MIDI Clock beats
-// you should use 
-// input.ignoreTypes(true, false, true)
+// Sysex, timing, and active sensing
 input.ignoreTypes(false, false, false);
 
-// ... receive MIDI messages ...
+// Write Sound Sysex Command: F0 41 6n 21 F7
 
-// Close the port when done.
+
 //input.closePort();
 

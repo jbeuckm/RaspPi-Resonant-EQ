@@ -10,5 +10,9 @@
     "midi"
   ],
   "author": "joe beuckman",
-  "license": "no"
+  "license": "no",
+  "dependencies": {
+    "midi": "^0.9.2",
+    "midi-parser": "^0.1.0"
+  }
 }
