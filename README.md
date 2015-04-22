@@ -23,7 +23,7 @@ Add these lines to your autostart.sh file:
 ```
 #!/bin/bash
 pd -nogui -alsamidi -mididev 1 -noaudio &
-csound /home/pi/res_eq/rbjeq.csd
+csound /home/pi/res_eq/res_eq.csd
 ```
 
 Save the file, and ake your script executable.
