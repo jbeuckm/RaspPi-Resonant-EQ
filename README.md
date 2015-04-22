@@ -5,12 +5,13 @@ A MIDI controllable DSP version of the [Serge Resonant Equalizer](http://www.cgs
 
 ## Setup Your Pi
 
-Begin with a clean install of Raspbian. Install these programs to run the instrument:
+Begin with a clean install of Raspbian. Install csound and node-js:
 
 ```
 sudo apt-get update
 sudo apt-get install csound
-sudo apt-get install puredata
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+sudo dpkg -i node_latest_armhf.deb
 ```
 
 Clone this repo
@@ -22,7 +23,7 @@ Create a startup script...
 Add these lines to your autostart.sh file:
 ```
 #!/bin/bash
-pd -nogui -alsamidi -mididev 1 -noaudio &
+node /home/pi/res_eq/patches/index.js &
 csound /home/pi/res_eq/res_eq.csd
 ```
 
