@@ -1,3 +1,5 @@
+var fs = require('fs');
+var csv = require('fast-csv');
 var midi = require('midi');
 var Parser = require('midi-parser');
 var msg = Parser.msg;
@@ -28,3 +30,19 @@ input.ignoreTypes(false, false, false);
 
 //input.closePort();
 
+var stream = fs.createReadStream("programs.csv");
+
+var programs = {};
+var currentProgramNumber = 0;
+
+csv
+    .fromStream(stream, {
+        headers: true
+    })
+    .on("data", function(program){
+	programs[program.number] = program;
+    })
+    .on("end", function () {
+	console.log("loaded programs");
+	console.log(programs);
+    });
