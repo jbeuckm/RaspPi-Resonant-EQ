@@ -5,13 +5,14 @@ A MIDI controllable DSP version of the [Serge Resonant Equalizer](http://www.cgs
 
 ## Setup Your Pi
 
-Begin with a clean install of Raspbian. Install csound and node-js:
+Begin with a clean install of Raspbian. Install csound, node and libasound2-dev:
 
 ```
 sudo apt-get update
 sudo apt-get install csound
 wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
+sudo apt-get install libasound2-dev
 ```
 
 Clone this repo
