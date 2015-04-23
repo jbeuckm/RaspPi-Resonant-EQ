@@ -1,7 +1,7 @@
 B1;2c<CsoundSynthesizer>
 <CsOptions>
 
--dm0 -odac -+rtaudio=alsa -Ma
+-dm0 -+rtaudio=alsa -Ma -odac:hw:1,0 -i adc:hw:1,0
 
 </CsOptions>
 <CsInstruments>
@@ -88,7 +88,9 @@ endop
 
 instr 1
 
-ain  rand .8
+aL, aR	ins
+ain = aR
+;ain  rand .8
 ;ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
 aout	ResonantEQ ain, p4
