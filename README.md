@@ -22,7 +22,7 @@ git clone https://github.com/jbeuckm/RaspPi-Resonant-EQ.git res_eq
 
 Install the nodejs dependencies:
 ```
-cd res_eq/patches
+cd res_eq/node
 npm install .
 ```
 
@@ -32,8 +32,8 @@ Create a startup script...
 Add these lines to your autostart.sh script:
 ```
 #!/bin/bash
-node /home/pi/res_eq/patches/index.js &
-csound /home/pi/res_eq/res_eq.csd
+cd /home/pi/res_eq/csound && csound realtime.csd &
+cd /home/pi/res_eq/node && node index.js
 ```
 
 Save the file, and make your script executable.
