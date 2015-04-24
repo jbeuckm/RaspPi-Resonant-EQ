@@ -20,7 +20,6 @@ kbend init 0
 kstatus, kchan, klsb, kmsb midiin
 if (kstatus == 224 && kchan == p4) then
 kbend = .5 + ((kmsb << 7) + klsb) / 16384
-printks "kbend = %f\\n", 0, kbend
 endif
 
 
