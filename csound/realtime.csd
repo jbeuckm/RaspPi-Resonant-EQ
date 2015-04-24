@@ -15,17 +15,14 @@ nchnls = 2
 
 instr 1
 
+kbend init 0
+
 kstatus, kchan, klsb, kmsb midiin
 if (kstatus == 224 && kchan == p4) then
-printks "kstatus= %d, kchan = %d, \\tmsb  = %d, lsb = %d \\n", 0, kstatus, kchan, kmsb, klsb
+kbend = -8192 + (kmsb << 7) + klsb
+printks "kbend = %d\\n", 0, kbend
 endif
 
-midinoteonoct p4, p5
-
-kpb init 0
-midipitchbend kpb
-printk2       kpb
-printks "kpb = %f\\n", 1, kpb
 
 aL, aR	ins
 ain = aR
