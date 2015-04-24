@@ -29,7 +29,7 @@ ain = aR
 ;ain  rand .8
 ;ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
-aout	ResonantEQ ain, p4
+aout	ResonantEQ ain, p4, kbend
 
 	out aout, aout
 

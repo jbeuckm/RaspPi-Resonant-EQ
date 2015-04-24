@@ -1,7 +1,7 @@
 
-opcode ResonantEQ, a, ap
+opcode ResonantEQ, a, apk
 
-ain, ichan	   xin
+ain, ichan, kbend  xin
 
       initc7	ichan, 2, .5
       initc7    ichan, 16, .5
