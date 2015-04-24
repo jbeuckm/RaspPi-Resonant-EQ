@@ -58,16 +58,16 @@ printks "klevel9 = %f, kres9 = %f, kq9 = %f\\n", 1, klevel9, kres9, kq9
 
 kmod	   ctrl7 ichan, 1, .05, 1
 
-af0    rbjeq ain, 29, klevel0, kq0, kres0, 8
-af1    rbjeq af0, 61, klevel1, kq1, kres1, 8
-af2    rbjeq af1, 115, klevel2, kq2, kres2, 8
-af3    rbjeq af2, 218, klevel3, kq3, kres3, 8
-af4    rbjeq af3, 411, klevel4, kq4, kres4, 8
-af5    rbjeq af4, 777, klevel5, kq5, kres5, 8
-af6    rbjeq af5, 1500, klevel6, kq6, kres6, 8
-af7    rbjeq af6, 2800, klevel7, kq7, kres7, 8
-af8    rbjeq af7, 5200, klevel8, kq8, kres8, 8
-af9    rbjeq af8, 11000, klevel9, kq9, kres9, 8
+af0    rbjeq ain, 29 * kbend, klevel0, kq0, kres0, 8
+af1    rbjeq af0, 61 * kbend, klevel1, kq1, kres1, 8
+af2    rbjeq af1, 115 * kbend, klevel2, kq2, kres2, 8
+af3    rbjeq af2, 218 * kbend, klevel3, kq3, kres3, 8
+af4    rbjeq af3, 411 * kbend, klevel4, kq4, kres4, 8
+af5    rbjeq af4, 777 * kbend, klevel5, kq5, kres5, 8
+af6    rbjeq af5, 1500 * kbend, klevel6, kq6, kres6, 8
+af7    rbjeq af6, 2800 * kbend, klevel7, kq7, kres7, 8
+af8    rbjeq af7, 5200 * kbend, klevel8, kq8, kres8, 8
+af9    rbjeq af8, 11000 * kbend, klevel9, kq9, kres9, 8
 
     xout af9
 
