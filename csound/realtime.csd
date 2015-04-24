@@ -15,6 +15,11 @@ nchnls = 2
 
 instr 1
 
+kstatus, kchan, klsb, kmsb midiin
+if (kstatus == 224 && kchan == p4) then
+printks "kstatus= %d, kchan = %d, \\tmsb  = %d, lsb = %d \\n", 0, kstatus, kchan, kmsb, klsb
+endif
+
 midinoteonoct p4, p5
 
 kpb init 0
