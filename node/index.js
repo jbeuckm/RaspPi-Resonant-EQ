@@ -18,7 +18,20 @@ input.on('message', function(deltaTime, message) {
     parser.write(message);
 });
 
-parser.on('midi', console.log);
+parser.on('midi', function(status, channel, message) {
+
+    switch (status) {
+
+    case msg.ctrlChg:
+	console.log("Control Change ("+channel+") "+message);
+	break;
+
+    case msg.progChg:
+	console.log("Program Change ("+channel+") "+message);
+	break;
+
+    }
+});
 
 input.openPort(1);
 

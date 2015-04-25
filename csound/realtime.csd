@@ -15,12 +15,13 @@ nchnls = 2
 
 instr 1
 
-kbend init 0
+kbend init 1
 
 kstatus, kchan, klsb, kmsb midiin
 if (kstatus == 224 && kchan == p4) then
 kbend = .5 + ((kmsb << 7) + klsb) / 16384
 endif
+
 
 
 aL, aR	ins
