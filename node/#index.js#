@@ -23,11 +23,13 @@ parser.on('midi', function(status, channel, message) {
     switch (status) {
 
     case msg.ctrlChg:
-	console.log("Control Change ("+channel+") "+message);
+//	console.log("Control Change ("+channel+") "+message);
+	handleControllerMessage(message);
 	break;
 
     case msg.progChg:
-	console.log("Program Change ("+channel+") "+message);
+//	console.log("Program Change ("+channel+") "+message);
+	handleProgramChange(message);
 	break;
 
     }
@@ -36,12 +38,10 @@ parser.on('midi', function(status, channel, message) {
 input.openPort(1);
 
 // Sysex, timing, and active sensing
-input.ignoreTypes(false, false, false);
+input.ignoreTypes(false, true, false);
 
 // Write Sound Sysex Command: F0 41 6n 21 F7
 
-
-//input.closePort();
 
 var stream = fs.createReadStream("data/programs.csv");
 
@@ -65,6 +65,12 @@ csv
 	savePrograms();
     });
 
+function handleControllerMessage(message) {
+    console.log(message);
+}
+function handleProgramChange(message) {
+    console.log(message);
+}
 
 function savePrograms() {
 

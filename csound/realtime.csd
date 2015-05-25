@@ -1,7 +1,7 @@
 B1;2c<CsoundSynthesizer>
 <CsOptions>
 
--dm0 -+rtaudio=alsa -Ma -odac:hw:1,0 -i adc:hw:1,0
+-dm0 -+rtaudio=alsa -Ma -odac:hw:1,0 -i adc:hw:1,0 -b 512 -B 1024
 
 </CsOptions>
 <CsInstruments>
