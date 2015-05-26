@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var nconf = require('nconf');
+var patchManager = require('./lib/patch-manager.js');
 
 var Q = require('q');
 var program = require('commander');
@@ -19,8 +19,6 @@ output.sendMessage([176,22,1]);
 
 
 
-nconf.file({ file: 'patches/patches.json' });
-
 input.on('message', function (deltaTime, message) {
     parser.write('message:');
     parser.write(message);
@@ -37,7 +35,7 @@ parser.on('midi', function (status, channel, message) {
 
         case MIDI_MESSAGE.progChg:
 //	console.log("Program Change ("+channel+") "+message);
-            handleProgramChange(message);
+            patchManager.setProgramNumber(message);
             break;
 
         case MIDI_MESSAGE.startSysex:
@@ -63,26 +61,6 @@ function endSysex(message) {
 
 
 
-// Write Sound Sysex Command: F0 41 6n 21 F7
-
-var defaultTemplate = {
-    controllers: {}
-};
-
-function createBlankPatch(template) {
-
-    template = template || defaultTemplate;
-
-    return {
-        controllers: JSON.parse(JSON.stringify(template.controllers))
-    };
-}
-
-var currentPatch;
-var currentBankNumber = 0;
-var currentProgramNumber = 0;
-
-
 function handleControllerMessage(message) {
     console.log("handleControllerMessage with " + message);
     console.log(typeof message);
@@ -90,44 +68,13 @@ function handleControllerMessage(message) {
     switch (message[0]) {
 
         case 0:
-            currentBankNumber = message[1];
-            handleProgramChange(currentProgramNumber);
+            patchManager.setBankNumber(message[1]);
             break;
 
         default:
-            currentPatch.controllers[message[0]] = message[1];
+            patchManager.updateController(message[0], message[1]);
             break;
     }
-}
-
-
-function handleProgramChange(message) {
-    console.log("handleProgramChange with " + message);
-    console.log(typeof message);
-
-    currentProgramNumber = parseInt(message);
-    currentPatch = nconf.get(createKeyFromBankPatch(currentBankNumber, currentProgramNumber));
-
-    if (currentPatch == null) {
-        currentPatch = createBlankPatch();
-    }
-
-
-}
-
-
-function createKeyFromBankPatch(bank, patch) {
-    return "bank-"+bank+"_patch-"+patch;
-}
-
-function saveCurrentPatch() {
-
-    nconf.set(createKeyFromBankPatch(currentBankNumber, currentProgramNumber), currentPatch);
-
-    nconf.save(function (err) {
-        if (err) { console.error(err); }
-        else { console.log("saved patch")}
-    });
 }
 
 
@@ -144,13 +91,6 @@ input.openPort(parseInt(program.interface));
 // Sysex, timing, and active sensing
 input.ignoreTypes(false, true, false);
 
-
-function initializeAllPatches() {
-    nconf.file({ file: './patches/patches.json' });
-}
-
-initializeAllPatches();
-handleProgramChange(0);
 
 
 function listenForKeys() {
@@ -169,8 +109,7 @@ function listenForKeys() {
 
         switch (key && key.name) {
             case 's':
-                console.log('saving bank-' + currentBankNumber + " / program-" + currentProgramNumber);
-                saveCurrentPatch();
+                patchManager.saveCurrentPatch();
                 break;
         }
 
