@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
+var nconf = require('nconf');
+
 var Q = require('q');
 var program = require('commander');
-var prompt = require('prompt');
-var fs = require('fs');
+
 var midi = require('midi');
 var Parser = require('midi-parser');
-var msg = Parser.msg;
+var MIDI_MESSAGE = Parser.msg;
 
 var input = new midi.input();
 var parser = new Parser();
 
+
+nconf.file({ file: 'patches/patches.json' });
 
 input.on('message', function (deltaTime, message) {
     parser.write(message);
@@ -20,24 +23,43 @@ parser.on('midi', function (status, channel, message) {
 
     switch (status) {
 
-        case msg.ctrlChg:
+        case MIDI_MESSAGE.ctrlChg:
 //	console.log("Control Change ("+channel+") "+message);
             handleControllerMessage(message);
             break;
 
-        case msg.progChg:
+        case MIDI_MESSAGE.progChg:
 //	console.log("Program Change ("+channel+") "+message);
             handleProgramChange(message);
+            break;
+
+        case MIDI_MESSAGE.startSysex:
+            startSysex(message);
+            break;
+
+        case MIDI_MESSAGE.endSysex:
+            endSysex(message);
             break;
 
     }
 });
 
 
+
+function startSysex(message) {
+    console.log(message);
+}
+
+function endSysex(message) {
+    console.log(message);
+}
+
+
+
 // Write Sound Sysex Command: F0 41 6n 21 F7
 
 
-var patches = [];
+var currentPatch = {};
 var currentBankNumber = 0;
 var currentProgramNumber = 0;
 
@@ -52,52 +74,18 @@ function handleProgramChange(message) {
 }
 
 
-function loadPatches() {
 
-    fs.readdir(__dirname + '/data', function (err, files) {
-
-        if (err) {
-            console.log(err);
-        }
-
-        files.filter(function (file) {
-            return file.substr(-5) === '.json';
-        })
-            .forEach(function (file) {
-
-                loadPatch(file);
-            });
-    });
-
-}
-
-function loadPatch(filename) {
-
-    fs.readFile(filename, 'utf8', function (err, data) {
-        if (err) {
-            console.log('Error: ' + err);
-            return;
-        }
-
-        data = JSON.parse(data);
-
-        patches = data;
-        console.dir(patches);
-
-    });
-
+function createKeyFromBankPatch(bank, patch) {
+    return "b"+bank+"p"+patch;
 }
 
 function saveCurrentPatch() {
 
-    var data = JSON.stringify(patches);
+    nconf.set(createKeyFromBankPatch(currentBankNumber, currentProgramNumber), currentPatch);
 
-    var filename = __dirname + '/bank' + currentBankNumber + '/' + currentProgramNumber + '.json';
-
-    fs.writeFile(filename, data, function (err) {
-        if (err) {
-            console.log(err);
-        }
+    nconf.save(function (err) {
+        if (err) { console.error(err); }
+        else { console.log("saved patch")}
     });
 }
 
@@ -113,53 +101,18 @@ var interfaceDef = Q.defer();
 
 console.log('interface = ' + program.interface);
 
-if (program.interface) {
-    interfaceDef.resolve(program.interface);
-}
-else {
 
-    console.log("Available MIDI ins:");
-    var portCount = input.getPortCount();
-    for (var i = 0; i < portCount; i++) {
-        console.log(i + ": " + input.getPortName(i));
-    }
-
-    var schema = {
-        properties: {
-            interface: {
-                pattern: /^[0-9]+$/,
-                message: 'Interface must be an integer',
-                required: true
-            }
-        }
-    };
-
-    prompt.start();
-
-    prompt.get(schema, function (err, result) {
-        if (err) {
-            console.log(err);
-            interfaceDef.reject(err);
-        }
-        else {
-            console.log(result);
-            interfaceDef.resolve(result.interface);
-        }
-    });
-}
-
-interfaceDef.promise.then(function (interface) {
-
-    console.log("opening MIDI in " + interface);
-    input.openPort(parseInt(interface));
+    console.log("opening MIDI in " + program.interface);
+    input.openPort(parseInt(program.interface));
 // Sysex, timing, and active sensing
     input.ignoreTypes(false, true, false);
 
-});
 
-loadPatches();
+function initializeAllPatches() {
+    nconf.file({ file: './patches/patches.json' });
+}
 
-
+initializeAllPatches();
 
 
 function listenForKeys() {
@@ -179,8 +132,9 @@ function listenForKeys() {
 
         switch (key && key.name) {
             case 's':
-                console.log('saving bank-' + currentBankNumber + "/program-" + currentProgramNumber);
+                console.log('saving bank-' + currentBankNumber + " / program-" + currentProgramNumber);
                 saveCurrentPatch();
+                break;
         }
 
     });
