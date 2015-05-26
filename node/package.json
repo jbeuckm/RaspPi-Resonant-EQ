@@ -19,5 +19,7 @@
     "nconf": "^0.7.1",
     "q": "^1.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  }
 }

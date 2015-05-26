@@ -22,6 +22,7 @@ output.sendMessage([176,22,1]);
 nconf.file({ file: 'patches/patches.json' });
 
 input.on('message', function (deltaTime, message) {
+    parser.write('message:');
     parser.write(message);
 });
 
@@ -115,9 +116,6 @@ function handleProgramChange(message) {
 }
 
 
-handleProgramChange(0);
-
-
 function createKeyFromBankPatch(bank, patch) {
     return "bank-"+bank+"_patch-"+patch;
 }
@@ -152,6 +150,7 @@ function initializeAllPatches() {
 }
 
 initializeAllPatches();
+handleProgramChange(0);
 
 
 function listenForKeys() {
@@ -162,7 +161,6 @@ function listenForKeys() {
 
 // listen for the "keypress" event
     process.stdin.on('keypress', function (ch, key) {
-
 
         // ctrl-c ( end of text )
         if (key === '\u0003') {
