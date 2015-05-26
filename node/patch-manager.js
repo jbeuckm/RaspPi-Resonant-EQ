@@ -13,6 +13,12 @@ var input = new midi.input();
 var parser = new Parser();
 
 
+var output = new midi.output();
+output.openVirtualPort("Patch Manager");
+output.sendMessage([176,22,1]);
+
+
+
 nconf.file({ file: 'patches/patches.json' });
 
 input.on('message', function (deltaTime, message) {
@@ -105,7 +111,7 @@ function handleProgramChange(message) {
         currentPatch = createBlankPatch();
     }
 
-    
+
 }
 
 
@@ -134,15 +140,11 @@ program
     .parse(process.argv);
 
 
-var interfaceDef = Q.defer();
 
-console.log('interface = ' + program.interface);
-
-
-    console.log("opening MIDI in " + program.interface);
-    input.openPort(parseInt(program.interface));
+console.log("opening MIDI interface " + program.interface);
+input.openPort(parseInt(program.interface));
 // Sysex, timing, and active sensing
-    input.ignoreTypes(false, true, false);
+input.ignoreTypes(false, true, false);
 
 
 function initializeAllPatches() {
