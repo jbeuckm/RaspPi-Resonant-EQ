@@ -1,12 +1,8 @@
 var nconf = require('nconf');
 
-
 var currentPatch;
 var currentBankNumber = 0;
 var currentProgramNumber = 0;
-
-
-
 
 // Write Sound Sysex Command: F0 41 6n 21 F7
 
@@ -24,21 +20,16 @@ function createBlankPatch(template) {
 }
 
 
-
-nconf.file({ file: 'patches/patches.json' });
-
-
 function createKeyFromBankPatch(bank, patch) {
     return "bank-"+bank+"_patch-"+patch;
 }
-
 
 
 module.exports = {
 
     setBankNumber: function(bank) {
         currentBankNumber = bank;
-        setProgramNumber(currentProgramNumber);
+        module.exports.setProgramNumber(currentProgramNumber);
     },
 
     setProgramNumber: function (message) {
@@ -52,6 +43,8 @@ module.exports = {
         if (currentPatch == null) {
             currentPatch = createBlankPatch();
         }
+
+        return currentPatch;
     },
 
     updateController: function(number, value) {
@@ -72,5 +65,7 @@ module.exports = {
 
 };
 
+
+nconf.file({ file: 'patches/patches.json' });
 
 module.exports.setProgramNumber(0);

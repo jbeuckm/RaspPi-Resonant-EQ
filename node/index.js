@@ -15,7 +15,6 @@ var parser = new Parser();
 
 var output = new midi.output();
 output.openVirtualPort("Patch Manager");
-output.sendMessage([176,22,1]);
 
 
 
@@ -35,7 +34,8 @@ parser.on('midi', function (status, channel, message) {
 
         case MIDI_MESSAGE.progChg:
 //	console.log("Program Change ("+channel+") "+message);
-            patchManager.setProgramNumber(message);
+            var patch = patchManager.setProgramNumber(message);
+            sendPatchToMidiOut(patch);
             break;
 
         case MIDI_MESSAGE.startSysex:
@@ -49,6 +49,18 @@ parser.on('midi', function (status, channel, message) {
     }
 });
 
+
+
+function sendPatchToMidiOut(patch) {
+
+    for (var i in patch.controllers) {
+        sendMidiController(parseInt(i), patch.controllers[i]);
+    }
+}
+
+function sendMidiController(number, value) {
+    output.sendMessage([MIDI_MESSAGE.ctrlChg, number, value]);
+}
 
 
 function startSysex(message) {
@@ -75,6 +87,9 @@ function handleControllerMessage(message) {
             patchManager.updateController(message[0], message[1]);
             break;
     }
+
+    // thru
+    sendMidiController(message[0], message[1]);
 }
 
 
