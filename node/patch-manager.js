@@ -58,8 +58,20 @@ function endSysex(message) {
 
 // Write Sound Sysex Command: F0 41 6n 21 F7
 
+var defaultTemplate = {
+    controllers: {}
+};
 
-var currentPatch = {};
+function createBlankPatch(template) {
+
+    template = template || defaultTemplate;
+
+    return {
+        controllers: JSON.parse(JSON.stringify(template.controllers))
+    };
+}
+
+var currentPatch = createBlankPatch();
 var currentBankNumber = 0;
 var currentProgramNumber = 0;
 
@@ -76,7 +88,7 @@ function handleProgramChange(message) {
 
 
 function createKeyFromBankPatch(bank, patch) {
-    return "b"+bank+"p"+patch;
+    return "bank-"+bank+"_patch-"+patch;
 }
 
 function saveCurrentPatch() {
