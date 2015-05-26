@@ -71,7 +71,7 @@ function createBlankPatch(template) {
     };
 }
 
-var currentPatch = createBlankPatch();
+var currentPatch;
 var currentBankNumber = 0;
 var currentProgramNumber = 0;
 
@@ -79,12 +79,37 @@ var currentProgramNumber = 0;
 function handleControllerMessage(message) {
     console.log("handleControllerMessage with " + message);
     console.log(typeof message);
+
+    switch (message[0]) {
+
+        case 0:
+            currentBankNumber = message[1];
+            handleProgramChange(currentProgramNumber);
+            break;
+
+        default:
+            currentPatch.controllers[message[0]] = message[1];
+            break;
+    }
 }
+
+
 function handleProgramChange(message) {
     console.log("handleProgramChange with " + message);
     console.log(typeof message);
+
+    currentProgramNumber = parseInt(message);
+    currentPatch = nconf.get(createKeyFromBankPatch(currentBankNumber, currentProgramNumber));
+
+    if (currentPatch == null) {
+        currentPatch = createBlankPatch();
+    }
+
+    
 }
 
+
+handleProgramChange(0);
 
 
 function createKeyFromBankPatch(bank, patch) {
