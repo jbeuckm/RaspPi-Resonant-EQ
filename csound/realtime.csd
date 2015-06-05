@@ -1,7 +1,7 @@
-B1;2c<CsoundSynthesizer>
+<CsoundSynthesizer>
 <CsOptions>
 
--dm0 -+rtaudio=alsa -M2 -odac:hw:1,0 -i adc:hw:1,0 -b 512 -B 1024
+-dm0 -+rtaudio=alsa -Ma -odac:hw:1,0 -i adc:hw:1,0 -b 512 -B 1024 -d --sched 1
 
 </CsOptions>
 <CsInstruments>
@@ -41,7 +41,7 @@ endin
 f 1 0 129 5 0.00001 76 0.00001 52 1	; turn up at the high end
 f 2 0 129 5 .01 65 1 64 25     	  	; shallow first half then steep for level control
 
-i 1 0 360000 1
+i 1 0 3600000 1
 
 e
 

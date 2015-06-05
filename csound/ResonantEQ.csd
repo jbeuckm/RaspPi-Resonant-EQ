@@ -1,4 +1,9 @@
 
+#define CHANNEL_MAX_LEVEL #15#
+#define CHANNEL_MIN_LEVEL #0.001#
+
+#define CHANNEL_MAX_RES #40#
+
 opcode ResonantEQ, a, apk
 
 ain, ichan, kbend  xin
@@ -14,47 +19,49 @@ ain, ichan, kbend  xin
       initc7    ichan, 1, .5
       initc7    ichan, 1, .5
 
-klevel0    ctrl7 ichan, 1, 0.001, 25, 2
-kres0      ctrl7 ichan, 1, 1, 50, 1
+
+klevel0    ctrl7 ichan, 1, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres0      ctrl7 ichan, 1, 1, $CHANNEL_MAX_RES, 1
 kq0        ctrl7 ichan, 1, 8, 10, 1
 
-klevel1    ctrl7 ichan, 7, 0.001, 25, 2
-kres1      ctrl7 ichan, 7, 1, 50, 1
+klevel1    ctrl7 ichan, 7, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres1      ctrl7 ichan, 7, 1, $CHANNEL_MAX_RES, 1
 kq1        ctrl7 ichan, 7, 8, 10, 1
 
-klevel2    ctrl7 ichan, 19, 0.001, 25, 2
-kres2      ctrl7 ichan, 19, 1, 50, 1
+klevel2    ctrl7 ichan, 19, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres2      ctrl7 ichan, 19, 1, $CHANNEL_MAX_RES, 1
 kq2        ctrl7 ichan, 19, 8, 10, 1
 
-klevel3    ctrl7 ichan, 71, 0.001, 25, 2
-kres3      ctrl7 ichan, 71, 1, 50, 1
+klevel3    ctrl7 ichan, 71, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres3      ctrl7 ichan, 71, 1, $CHANNEL_MAX_RES, 1
 kq3        ctrl7 ichan, 71, 8, 10, 1
 
-klevel4    ctrl7 ichan, 74, 0.001, 25, 2
-kres4      ctrl7 ichan, 74, 1, 50, 1
+klevel4    ctrl7 ichan, 74, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres4      ctrl7 ichan, 74, 1, $CHANNEL_MAX_RES, 1
 kq4        ctrl7 ichan, 74, 8, 10, 1
 
-klevel5    ctrl7 ichan, 80, 0.001, 25, 2
-kres5      ctrl7 ichan, 80, 1, 50, 1
+klevel5    ctrl7 ichan, 80, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres5      ctrl7 ichan, 80, 1, $CHANNEL_MAX_RES, 1
 kq5        ctrl7 ichan, 80, 8, 10, 1
 
-klevel6    ctrl7 ichan, 81, 0.001, 25, 2
-kres6	   ctrl7 ichan, 81, 1, 50, 1
-kq6	   ctrl7 ichan, 81, 8, 10, 1
+klevel6    ctrl7 ichan, 81, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres6	      ctrl7 ichan, 81, 1, $CHANNEL_MAX_RES, 1
+kq6	    ctrl7 ichan, 81, 8, 10, 1
 
-klevel7    ctrl7 ichan, 91, 0.001, 25, 2
-kres7	   ctrl7 ichan, 91, 1, 50, 1
+klevel7    ctrl7 ichan, 91, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres7	   ctrl7 ichan, 91, 1, $CHANNEL_MAX_RES, 1
 kq7	   ctrl7 ichan, 91, 8, 10, 1
 
-klevel8	   ctrl7 ichan, 2, 0.001, 25, 2
-kres8      ctrl7 ichan, 2, 1, 50, 1
+klevel8	   ctrl7 ichan, 2, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres8      ctrl7 ichan, 2, 1, $CHANNEL_MAX_RES, 1
 kq8	   ctrl7 ichan, 2, 8, 10, 1
 
-klevel9	   ctrl7 ichan, 16, 0.001, 25, 2
-kres9	   ctrl7 ichan, 16, 1, 50, 1
+klevel9	   ctrl7 ichan, 16, $CHANNEL_MIN_LEVEL, $CHANNEL_MAX_LEVEL, 2
+kres9	   ctrl7 ichan, 16, 1, $CHANNEL_MAX_RES, 1
 kq9	   ctrl7 ichan, 16, 8, 10, 1
 
-printks "klevel9 = %f, kres9 = %f, kq9 = %f\\n", 1, klevel9, kres9, kq9
+
+;printks "klevel9 = %f, kres9 = %f, kq9 = %f\\n", 1, klevel9, kres9, kq9
 
 kmod	   ctrl7 ichan, 1, .05, 1
 
