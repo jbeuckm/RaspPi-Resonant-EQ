@@ -1,7 +1,7 @@
 <CsoundSynthesizer>
 <CsOptions>
 
--dm0 -+rtaudio=alsa -Ma -odac:hw:1,0 -i adc:hw:1,0 -b 512 -B 1024 -d --sched 1
+-dm0 -+rtaudio=alsa -Ma -odac:plughw:1,0 -i adc:plughw:1,0 -b 512 -B 1024 -d --sched 1
 
 </CsOptions>
 <CsInstruments>
@@ -25,7 +25,8 @@ endif
 
 
 aL, aR	ins
-ain = aR
+ain = aL
+
 ;ain  rand .8
 ;ain     diskin2 "apache.wav", 1, 0, 1, 0, 32
 
